@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ECommerceApp.Domain.Common;
 
-namespace ECommerceApp.Domain.Repository
+namespace ECommerceApp.Application.Interfaces
 {
     public interface IBaseRepository<TEntity> where TEntity : class
     {
-        Task<TEntity> CreateAsync(TEntity entity);
-        Task<TEntity> UpdateAsync(TEntity entity);
-        Task<IEnumerable<TEntity>> GetAllAsync();
-        Task DeleteAsync(TEntity entity);
-        Task<TEntity> GetEntityById(int id);
+        Task<Result> GetAllAsync();
+        Task<Result> GetByIdAsync(int id);
+        Task<Result> AddAsync(TEntity entity);
+        Task<Result> UpdateAsync(TEntity entity);
+        Task<Result> DeleteAsync(int id);
+        Task<Result> FindAllAsync(Expression<Func<TEntity, bool>> filter);
+        Task<bool> Exists(Expression<Func<TEntity, bool>> filter);
     }
 }

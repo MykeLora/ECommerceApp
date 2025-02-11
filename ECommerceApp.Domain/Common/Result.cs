@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ECommerceApp.Domain.Common
 {
-    public class OperationResult
+    public class Result
     {
-        public OperationResult()
+        public Result()
         {
             this.Success = true;
         }
