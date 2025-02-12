@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
 using System.ComponentModel.DataAnnotations;
 namespace E_commerce.Domain.Entities.Products
 {
-    [Index(nameof(Name), Name = "IX_Name_Unique", IsUnique = true)]
-    // Represents a product category
+       
     public class Category
     {
         public int Id { get; set; }

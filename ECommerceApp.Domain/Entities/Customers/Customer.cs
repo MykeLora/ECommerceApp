@@ -1,16 +1,11 @@
-﻿using E_commerce.Domain.Base;
-using E_commerce.Domain.Entities.Carts;
+﻿using E_commerce.Domain.Entities.Carts;
 using E_commerce.Domain.Entities.Orders;
 using ECommerceApp.Domain.Common;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Xml.Linq;
 
 namespace E_commerce.Domain.Entities.Customers
 {
-    // Represents a customer in the e-commerce system
-    [Index(nameof(Email), Name = "IX_Email_Unique", IsUnique = true)]
+
     public class Customer : BaseEntity<int>
     {
         public override int Id { get; set; }

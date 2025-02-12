@@ -1,5 +1,4 @@
-﻿using E_commerce.Domain.Base;
-using E_commerce.Domain.Entities.Status;
+﻿using E_commerce.Domain.Entities.Status;
 using ECommerceApp.Domain.Common;
 using ECommerceApp.Models;
 using System.ComponentModel.DataAnnotations;
