@@ -2,7 +2,7 @@
 using ECommerceApp.Domain.Common;
 using ECommerceApp.Persistence.Base;
 using ECommerceApp.Persistence.Context;
-using ECommerceApp.Persistence.Interfaces;
+using ECommerceApp.Persistence.Interfaces.Products;
 using ECommerceApp.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceApp.Persistence.Repositories
+namespace ECommerceApp.Persistence.Repositories.Products
 {
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
@@ -53,10 +53,10 @@ namespace ECommerceApp.Persistence.Repositories
                 result.Success = false;
                 result.Message = $"Error getting products by category.";
             }
-            return result;  
+            return result;
         }
 
 
     }
- 
+
 }

@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceApp.Persistence.Interfaces
+namespace ECommerceApp.Persistence.Interfaces.Products
 {
     public interface ICategoryRepository : IBaseRepository<Category>
     {
-        
+
     }
 }

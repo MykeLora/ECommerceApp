@@ -34,7 +34,7 @@ namespace ECommerceApp.Persistence.Base
             catch (Exception ex)
             {
                 result.Success = false;
-                result.Message = $"Error saving the entity.";
+                result.Message = $"Error saving the entity. {ex.Message}";
             }
 
             return result;
@@ -61,7 +61,7 @@ namespace ECommerceApp.Persistence.Base
             catch (Exception ex)
             {
                 result.Success = false;
-                result.Message = $"Error deleting the entity.";
+                result.Message = $"Error deleting the entity. {ex.Message}";
             }
             return result;
         }
