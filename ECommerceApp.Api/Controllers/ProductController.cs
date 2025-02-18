@@ -1,5 +1,8 @@
-﻿using ECommerceApp.Persistence.Interfaces;
+﻿using E_commerce.Domain.Entities.Products;
+using ECommerceApp.Api.Models;
+using ECommerceApp.Persistence.Interfaces.Products;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.Contracts;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,10 +36,24 @@ namespace ECommerceApp.Api.Controllers
         }
 
         // POST api/<ValuesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        [HttpPost("Create-Product")]
+      public async Task<IActionResult> CreateProduct(ProductModel product)
+      {
+            Product model = new Product();
+
+            model.Id = product.Id;
+            model.Name = product.Name;
+            model.Description = product.Description;
+            model.Price = product.Price;
+            model.CategoryId = product.CategoryId;
+            model.StockQuantity = product.StockQuantity;
+            model.IsAvailable = product.IsAvailable;
+            model.ImageUrl = product.ImageUrl;
+
+            var products =  await _productRepository.AddAsync(model);
+            return Ok(products);
+
+      }
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
