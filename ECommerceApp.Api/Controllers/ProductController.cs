@@ -35,25 +35,12 @@ namespace ECommerceApp.Api.Controllers
             return Ok(product);
         }
 
-        // POST api/<ValuesController>
-        [HttpPost("Create-Product")]
-      public async Task<IActionResult> CreateProduct(ProductModel product)
-      {
-            Product model = new Product();
-
-            model.Id = product.Id;
-            model.Name = product.Name;
-            model.Description = product.Description;
-            model.Price = product.Price;
-            model.CategoryId = product.CategoryId;
-            model.StockQuantity = product.StockQuantity;
-            model.IsAvailable = product.IsAvailable;
-            model.ImageUrl = product.ImageUrl;
-
-            var products =  await _productRepository.AddAsync(model);
+        [HttpGet("GetProductsByCategory/{categoryId}")]
+        public async Task<IActionResult> GetProductsByCategory(int categoryId)
+        {
+            var products = await _productRepository.GetProductsByCategory(categoryId);
             return Ok(products);
-
-      }
+        }
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]

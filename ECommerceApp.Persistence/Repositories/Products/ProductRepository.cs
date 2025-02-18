@@ -26,35 +26,35 @@ namespace ECommerceApp.Persistence.Repositories.Products
         {
             Result result = new Result();
 
-            ProductCategoryModel prodCat = new ProductCategoryModel();
-
             try
             {
                 var querys = await (from product in _context.Products
-                                    join category in _context.Categories on product.CategoryId equals prodCat.Id
+                                    join category in _context.Categories on product.CategoryId equals category.Id
                                     where product.CategoryId == categoryId
                                     select new ProductCategoryModel()
                                     {
-                                        CategoryId = prodCat.Id,
-                                        Name = prodCat.Name,
-                                        Description = prodCat.Description,
-                                        Price = prodCat.Price,
-                                        DiscountPercentage = prodCat.DiscountPercentage,
-                                        StockQuantity = prodCat.StockQuantity,
-                                        ImageUrl = prodCat.ImageUrl,
-                                        IsAvailable = prodCat.IsAvailable
-
+                                        Id = product.Id,
+                                        CategoryId = category.Id,
+                                        Name = product.Name,
+                                        Description = product.Description,
+                                        Price = product.Price,
+                                        DiscountPercentage = product.DiscountPercentage,
+                                        StockQuantity = product.StockQuantity,
+                                        ImageUrl = product.ImageUrl,
+                                        IsAvailable = product.IsAvailable
                                     }).ToListAsync();
 
                 result.Data = querys;
+                result.Success = true;
             }
             catch (Exception ex)
             {
                 result.Success = false;
-                result.Message = $"Error getting products by category.";
+                result.Message = $"Error getting products by category: {ex.Message}";
             }
             return result;
         }
+
 
 
     }
