@@ -2,168 +2,137 @@
 using ECommerceApp.Domain.Common;
 using ECommerceApp.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ECommerceApp.Persistence.Base
+namespace BECommerceApp.Persistance.Base
 {
-    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class 
+    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly ApplicationContext _context;
-        private readonly DbSet<TEntity> _dbSet;
-
+        private DbSet<TEntity> _entities;
         public BaseRepository(ApplicationContext context)
         {
+
             _context = context;
-            _dbSet = _context.Set<TEntity>();
+            _entities = _context.Set<TEntity>();
         }
-        public  async Task<Result> AddAsync(TEntity entity)
+
+        public virtual async Task<bool> Exists(Expression<Func<TEntity, bool>> filter)
+        {
+            return await _entities.AnyAsync(filter);
+        }
+
+        public virtual async Task<Result> GetAllAsync()
         {
             Result result = new Result();
 
             try
             {
-                await _dbSet.AddAsync(entity);
-                await _context.SaveChangesAsync();
-                result.Success = true;
+                var datos = await _entities.ToListAsync();
+                result.Data = datos;
             }
             catch (Exception ex)
             {
+
                 result.Success = false;
-                result.Message = $"Error saving the entity. {ex.Message}";
+                result.Message = $"Ocurrió un error {ex.Message} obteniendo los datos.";
             }
 
             return result;
         }
 
-        public async Task<Result> DeleteAsync(int id)
+        public virtual async Task<Result> GetAllAsync(Expression<Func<TEntity, bool>> filter)
         {
-            
             Result result = new Result();
 
             try
             {
-                var entity = await _dbSet.FindAsync(id);
-                if (entity == null)
-                {
-                    result.Success = false;
-                    result.Message = $"Entity not found.";
-                    return result;
-                }
-                _dbSet.Remove(entity);
-                await _context.SaveChangesAsync();
-                result.Success = true;
+                var datos = await _entities.Where(filter).ToListAsync();
+                result.Data = datos;
             }
             catch (Exception ex)
             {
+
                 result.Success = false;
-                result.Message = $"Error deleting the entity. {ex.Message}";
+                result.Message = $"Ocurrió un error {ex.Message} obteniendo los datos.";
             }
+
             return result;
+
         }
 
-        public Task<bool> Exists(Expression<Func<TEntity, bool>> filter)
+        public virtual async Task<Result> GetByIdAsync(int Id)
         {
             Result result = new Result();
-
             try
             {
-                var entity = _dbSet.Where(filter).FirstOrDefault();
-                if (entity == null)
-                {
-                    return Task.FromResult(false);
-                }
-                return Task.FromResult(true);
-            }
-            catch (Exception ex)
-            {
-                return Task.FromResult(false);
-            }
-        }
-
-        public Task<Result> FindAllAsync(Expression<Func<TEntity, bool>> filter)
-        {
-            Result result = new Result();
-
-            try
-            {
-                var entities = _dbSet.Where(filter).ToList();
-                result.Data = entities;
-                result.Success = true;
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = $"Error finding the entities.";
-            }
-            return Task.FromResult(result);
-        }
-
-        public Task<Result> GetAllAsync()
-        {
-            Result result = new Result();
-
-            try
-            {
-                var entities = _dbSet.ToList();
-                result.Data = entities;
-                result.Success = true;
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = $"Error getting the entities.";
-            }
-
-            return Task.FromResult(result);
-        }
-
-        public Task<Result> GetByIdAsync(int id)
-        {
-            Result result = new Result();
-
-            try
-            {
-                var entity = _dbSet.Find(id);
-                if (entity == null)
-                {
-                    result.Success = false;
-                    result.Message = $"Entity not found.";
-                    return Task.FromResult(result);
-                }
+                var entity = await _entities.FindAsync(Id);
                 result.Data = entity;
-                result.Success = true;
             }
             catch (Exception ex)
             {
-                result.Success = false;
-                result.Message = $"Error getting the entity.";
-            }
 
-            return Task.FromResult(result);
+                result.Success = false;
+                result.Message = $"Ocurrió un error {ex.Message} obteniendo la entidad.";
+            }
+            return result;
         }
 
-        public async Task<Result> UpdateAsync(TEntity entity)
+        public async virtual Task<Result> DeleteAsync(TEntity entity)
         {
             Result result = new Result();
 
             try
             {
-                _dbSet.Update(entity);
+                _entities.Remove(entity);
                 await _context.SaveChangesAsync();
-                result.Success = true;
             }
             catch (Exception ex)
             {
                 result.Success = false;
-                result.Message = $"Error updating the entity.";
+                result.Message = $"Ocurrió un error {ex.Message} removiendo la entidad.";
+
             }
+
+            return result;
+        }
+
+        public virtual async Task<Result> AddAsync(TEntity entity)
+        {
+            Result result = new Result();
+
+            try
+            {
+                _entities.Add(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = $"Ocurrió un error {ex.Message} guardando la entidad.";
+
+            }
+
+            return result;
+        }
+
+        public virtual async Task<Result> UpdateAsync(TEntity entity)
+        {
+            Result result = new Result();
+
+            try
+            {
+                _entities.Update(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = $"Ocurrió un error {ex.Message} actualizando la entidad.";
+
+            }
+
             return result;
         }
     }
-  
 }

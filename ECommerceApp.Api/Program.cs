@@ -1,4 +1,5 @@
 using ECommerceApp.Application.Interfaces;
+using ECommerceApp.Application.Services;
 using ECommerceApp.Persistence.Base;
 using ECommerceApp.Persistence.Context;
 using ECommerceApp.Persistence.Interfaces.Customers;
@@ -22,6 +23,9 @@ public class Program
 
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
+        // Add services Application
+
+        builder.Services.AddTransient<CategoryService>();
 
 
         builder.Services.AddControllers()

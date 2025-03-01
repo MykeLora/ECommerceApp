@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceApp.Persistence.Models
+namespace ECommerceApp.Persistence.Models.Products
 {
     public class ProductCategoryModel
     {

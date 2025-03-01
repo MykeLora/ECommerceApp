@@ -1,5 +1,6 @@
 ﻿using E_commerce.Domain.Entities.Customers;
 using ECommerceApp.Application.Interfaces;
+using ECommerceApp.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,8 @@ namespace ECommerceApp.Persistence.Interfaces.Customers
 {
     public interface ICustomerRepository : IBaseRepository<Customer>
     {
+
+        Task<Result> RegisterCustomerAsync();
+        Task<Result> LoginAsync();
     }
 }

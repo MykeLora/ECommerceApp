@@ -15,7 +15,6 @@
     <Folder Include="Core\" />
     <Folder Include="Helpers\" />
     <Folder Include="Wrapper\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

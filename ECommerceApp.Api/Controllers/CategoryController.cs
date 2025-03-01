@@ -1,4 +1,7 @@
-﻿using ECommerceApp.Persistence.Interfaces.Products;
+﻿using ECommerceApp.Application.Services;
+using ECommerceApp.Application.Wrappers;
+using ECommerceApp.DTOs.CategoryDTOs;
+using ECommerceApp.Persistence.Interfaces.Products;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,34 +12,46 @@ namespace ECommerceApp.Api.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly CategoryService _categoryservice;
+        
 
-        public CategoryController(ICategoryRepository category)
+        public CategoryController(CategoryService category)
         {
-            _categoryRepository = category;
+            _categoryservice = category;
         }
 
 
-        // GET: api/<CategoryController>
+        
         [HttpGet("Get-All-Categorie")]
         public async Task<IActionResult> GetAllCategories()
         {
-            var categories = await _categoryRepository.GetAllAsync();
+            var categories = await _categoryservice.GetAllAsync();
+
+            if (categories == null)
+            {
+                return BadRequest();
+            }
             return Ok(categories);
         }
 
-        [HttpGet("Get-Category-ById/{id}")]
-        public async Task<IActionResult> GetCategoryById(int id)
-        {
-            var category = await _categoryRepository.GetByIdAsync(id);
-            return Ok(category);
-        }
+        //[HttpGet("Get-Category-ById/{id}")]
+        //public async Task<IActionResult> GetCategoryById(int id)
+        //{
+        //    //var category = await _categoryRepository.GetByIdAsync(id);
+        //    //return Ok(category);
+        //}
 
-        // POST api/<CategoryController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        //// Creates a new category.
+        //[HttpPost("CreateCategory")]
+        //public async Task<ActionResult<Response<CategoryResponseDTO>>> CreateCategory([FromBody] CategoryCreateDTO categoryDto)
+        //{
+        //    var response = await _categoryservice.CreateCategoryAsync(categoryDto);
+        //    if (response.StatusCode != 200)
+        //    {
+        //        return StatusCode(response.StatusCode, response);
+        //    }
+        //    return Ok(response);
+        //}
 
         // PUT api/<CategoryController>/5
         [HttpPut("{id}")]

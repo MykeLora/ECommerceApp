@@ -1,12 +1,8 @@
-﻿using E_commerce.Domain.Entities.Customers;
-using ECommerceApp.Persistence.Base;
+﻿using BECommerceApp.Persistance.Base;
+using E_commerce.Domain.Entities.Customers;
+using ECommerceApp.Domain.Common;
 using ECommerceApp.Persistence.Context;
 using ECommerceApp.Persistence.Interfaces.Customers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ECommerceApp.Persistence.Repositories.Customers
 {
@@ -17,6 +13,16 @@ namespace ECommerceApp.Persistence.Repositories.Customers
         public CustomerRepository(ApplicationContext context) : base(context)
         {
             _context = context;
+        }
+
+        public Task<Result> LoginAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Result> RegisterCustomerAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }
