@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace E_commerce.Domain.Entities.Customers
 {
-
     public class Customer : BaseEntity<int>
     {
         public override int Id { get; set; }

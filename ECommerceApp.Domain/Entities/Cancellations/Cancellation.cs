@@ -1,14 +1,15 @@
 ﻿using E_commerce.Domain.Entities.Orders;
 using E_commerce.Domain.Entities.Payments;
+using ECommerceApp.Domain.Common;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_commerce.Domain.Entities.Status
 {
     // Represents a cancellation request for an order
-    public class Cancellation
+    public class Cancellation : BaseEntity<int>
     {
-        public int Id { get; set; }
+        public override int Id { get; set; }
 
         // Foreign key to Order
         [Required(ErrorMessage = "Order ID is required.")]

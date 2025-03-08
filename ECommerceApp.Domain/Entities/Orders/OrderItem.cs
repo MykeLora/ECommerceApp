@@ -1,14 +1,15 @@
 ﻿using E_commerce.Domain.Entities.Customers;
 using E_commerce.Domain.Entities.Products;
+using ECommerceApp.Domain.Common;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_commerce.Domain.Entities.Orders
 {
     // Represents an individual item within an order
-    public class OrderItem
+    public class OrderItem : BaseEntity<int>
     {
-        public int Id { get; set; }
+        public override int Id { get; set; }
 
         // Foreign key to Order
         [Required(ErrorMessage = "Order ID is required.")]

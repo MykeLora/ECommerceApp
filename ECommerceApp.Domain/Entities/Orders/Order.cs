@@ -1,6 +1,8 @@
 ﻿using E_commerce.Domain.Entities.Customers;
 using E_commerce.Domain.Entities.Payments;
 using E_commerce.Domain.Entities.Status;
+using ECommerceApp.Domain.Common;
+using ECommerceApp.Domain.Entities.Payments;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
@@ -8,9 +10,9 @@ using System.Net;
 namespace E_commerce.Domain.Entities.Orders
 {
     // Represents an order placed by a customer
-    public class Order
+    public class Order : BaseEntity<int>
     {
-        public int Id { get; set; }
+        public override int Id { get; set; }
 
         [Required]
         [StringLength(30, ErrorMessage = "Order Number cannot exceed 30 characters.")]

@@ -1,16 +1,13 @@
 ﻿using E_commerce.Domain.Entities.Orders;
+using E_commerce.Domain.Entities.Payments;
 using ECommerceApp.Domain.Common;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace E_commerce.Domain.Entities.Payments
+namespace ECommerceApp.Domain.Entities.Payments
 {
-    // Represents a payment transaction
-    public class Payment : BaseEntity<int>
+    public class Payment : BaseTransaction
     {
-
-        public override int Id { get; set; }
-
         [Required]
         public int OrderId { get; set; }
 
@@ -19,23 +16,8 @@ namespace E_commerce.Domain.Entities.Payments
 
         [Required]
         [StringLength(50)]
-        public string PaymentMethod { get; set; } // e.g., "DebitCard", "CreditCard", "PayPal", "COD"
+        public string PaymentMethod { get; set; }
 
-        [StringLength(50)]
-        public string? TransactionId { get; set; } // From payment gateway
-
-        [Required]
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal Amount { get; set; }
-
-        [Required]
-        public DateTime PaymentDate { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public PaymentStatus Status { get; set; } // "Completed", "Pending", "Failed", "Refunded"
-
-        public Refund Refund { get; set; } // Navigational property to Refund
+        public Refund Refund { get; set; }
     }
 }
-

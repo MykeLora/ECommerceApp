@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ECommerceApp.Domain.Common;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_commerce.Domain.Entities.Customers
 {
     // Represents a customer's address
-    public class Address
+    public class Address : BaseEntity<int>
     {
-        public int Id { get; set; }
+        public override int Id { get; set; }
 
         [Required]
         public int CustomerId { get; set; }

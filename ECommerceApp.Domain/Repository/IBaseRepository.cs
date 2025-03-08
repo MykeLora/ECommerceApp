@@ -5,13 +5,15 @@ using ECommerceApp.Domain.Common;
 
 namespace ECommerceApp.Application.Interfaces
 {
+
+
     public interface IBaseRepository<TEntity> where TEntity : class
     {
-        Task<Result> GetAllAsync();
-        Task<Result> GetByIdAsync(int id);
-        Task<Result> AddAsync(TEntity entity);
-        Task<Result> UpdateAsync(TEntity entity);
-        Task<Result> DeleteAsync(TEntity entity);
+        Task<List<TEntity>> GetAllAsync();
+        Task<TEntity> GetByIdAsync(int id);
+        Task<TEntity> AddAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);
+        Task<TEntity> RemoveAsync(TEntity entity);
         Task<bool> Exists(Expression<Func<TEntity, bool>> filter);
     }
 }

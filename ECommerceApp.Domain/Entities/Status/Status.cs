@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ECommerceApp.Domain.Common;
+using System.ComponentModel.DataAnnotations;
 namespace E_commerce.Domain.Entities.Status
 {
     // Represents the status master
-    public class Status
+    public class Status : BaseEntity<int>
     {
         [Required]
-        public int Id { get; set; }
+        public override int Id { get; set; }
 
         [Required]
         [StringLength(50)]
