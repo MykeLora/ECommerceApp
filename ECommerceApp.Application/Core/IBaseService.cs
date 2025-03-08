@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ECommerceApp.Application.Core
 {
-    public interface IBaseService< TDResponse, TDSave, TDUpdate> where 
+    public interface IBaseService< TDResponse, TDSave, TDUpdate> 
     {
-        Task<IEnumerable<TDResponse>> GetAllAsync();
-        Task<TDResponse> GetByIdAsync(int id);
-        Task<TDResponse> SaveAsync(TDSave dto);
-        Task<TDResponse> UpdateAsync(TDUpdate dto);
+        Task<TDResponse> GetAll();
+        Task<TDResponse> GetById(int id);
+        Task<TDResponse> Save(TDSave dto);
+        Task<TDResponse> Update(TDUpdate dto);
     }
 }

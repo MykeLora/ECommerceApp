@@ -1,5 +1,6 @@
 ﻿using E_commerce.Domain.Entities.Products;
 using ECommerceApp.Api.Models;
+using ECommerceApp.Application.DTos.ProductDTos;
 using ECommerceApp.Persistence.Interfaces.Products;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.Contracts;
@@ -42,16 +43,75 @@ namespace ECommerceApp.Api.Controllers
             return Ok(products);
         }
 
-        // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("CreateProduct")]
+        public async Task<IActionResult> Post([FromBody] ProductCreateDTO createDTO)
         {
+            if (createDTO == null)
+                return BadRequest("El objeto no puede ser nulo.");
+
+            var product = new Product
+            {
+                Name = createDTO.Name,
+                Price = createDTO.Price,
+                Description = createDTO.Description,
+                DiscountPercentage = createDTO.DiscountPercentage,
+                StockQuantity = createDTO.StockQuantity,
+                ImageUrl = createDTO.ImageUrl,
+                CategoryId = createDTO.CategoryId
+            };
+
+            // Guardar el producto en la base de datos
+            var createdProduct = await _productRepository.AddAsync(product);
+
+            // Devolver el objeto creado con su ID
+            return Ok("Product created");
         }
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] ProductUpdateDTO updateDTO)
+        {
+            if (updateDTO == null)
+                return BadRequest("El objeto no puede ser nulo.");
+
+            // Buscar el producto en la base de datos
+            var existingProduct = await _productRepository.GetByIdAsync(id);
+            if (existingProduct == null)
+                return NotFound($"No se encontró un producto con el ID {id}.");
+
+            // Mapear los cambios del DTO al objeto existente
+            existingProduct.Id = updateDTO.Id;
+            existingProduct.Name = updateDTO.Name;
+            existingProduct.Price = updateDTO.Price;
+            existingProduct.Description = updateDTO.Description;
+            existingProduct.DiscountPercentage = updateDTO.DiscountPercentage;
+            existingProduct.StockQuantity = updateDTO.StockQuantity;
+            existingProduct.ImageUrl = updateDTO.ImageUrl;
+            existingProduct.CategoryId = updateDTO.CategoryId;
+
+
+            // Actualizar el producto
+            var updatedProduct = await _productRepository.UpdateAsync(existingProduct);
+
+            return Ok(updatedProduct);
+        }
+
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
+            var entity = await _productRepository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            await _productRepository.RemoveAsync(entity);
+
+            return Ok();
         }
+
     }
 }
+

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceApp.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250213035558_Mig1")]
+    [Migration("20250308174935_Mig1")]
     partial class Mig1
     {
         /// <inheritdoc />
@@ -25,6 +25,64 @@ namespace ECommerceApp.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ECommerceApp.Domain.Entities.Payments.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TransactionId")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("Payments");
+                });
+
             modelBuilder.Entity("E_commerce.Domain.Entities.Carts.Cart", b =>
                 {
                     b.Property<int>("Id")
@@ -36,25 +94,28 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CreationUser")
+                    b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsCheckedOut")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserDeleted")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserMod")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -78,14 +139,20 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CreationUser")
+                    b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -99,13 +166,10 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserDeleted")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserMod")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -145,8 +209,23 @@ namespace ECommerceApp.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
@@ -156,6 +235,12 @@ namespace ECommerceApp.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -175,14 +260,17 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CreationUser")
+                    b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -194,6 +282,9 @@ namespace ECommerceApp.Persistence.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
@@ -209,13 +300,10 @@ namespace ECommerceApp.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserDeleted")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserMod")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -238,13 +326,19 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CreationUser")
+                    b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<int>("OrderItemId")
@@ -256,13 +350,10 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserDeleted")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserMod")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -287,8 +378,23 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<int>("BillingAddressId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -319,6 +425,12 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<decimal>("TotalDiscountAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BillingAddressId");
@@ -340,8 +452,23 @@ namespace ECommerceApp.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -358,6 +485,12 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
@@ -365,62 +498,6 @@ namespace ECommerceApp.Persistence.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("E_commerce.Domain.Entities.Payments.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreationUser")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("Status")
-                        .HasMaxLength(20)
-                        .HasColumnType("int");
-
-                    b.Property<string>("TransactionId")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("UserDeleted")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserMod")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("E_commerce.Domain.Entities.Payments.Refund", b =>
@@ -443,14 +520,17 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CreationUser")
+                    b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("InitiatedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PaymentId")
                         .HasColumnType("int");
@@ -458,17 +538,17 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("TransactionId")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserDeleted")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserMod")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -490,6 +570,18 @@ namespace ECommerceApp.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -498,10 +590,19 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -511,15 +612,21 @@ namespace ECommerceApp.Persistence.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(1089),
+                            CreatedBy = 0,
                             Description = "Electronic devices and accessories",
                             IsActive = true,
+                            IsDeleted = false,
                             Name = "Electronics"
                         },
                         new
                         {
                             Id = 2,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(1093),
+                            CreatedBy = 0,
                             Description = "Books and magazines",
                             IsActive = true,
+                            IsDeleted = false,
                             Name = "Books"
                         });
                 });
@@ -535,9 +642,22 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("DiscountPercentage")
                         .HasColumnType("int");
@@ -546,7 +666,10 @@ namespace ECommerceApp.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAvailable")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -560,6 +683,12 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -571,10 +700,13 @@ namespace ECommerceApp.Persistence.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(1184),
+                            CreatedBy = 0,
                             Description = "Latest model smartphone with advanced features.",
                             DiscountPercentage = 10,
                             ImageUrl = "https://example.com/images/smartphone.jpg",
-                            IsAvailable = true,
+                            IsActive = true,
+                            IsDeleted = false,
                             Name = "Smartphone",
                             Price = 699.99m,
                             StockQuantity = 50
@@ -583,10 +715,13 @@ namespace ECommerceApp.Persistence.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(1197),
+                            CreatedBy = 0,
                             Description = "High-performance laptop suitable for all your needs.",
                             DiscountPercentage = 15,
                             ImageUrl = "https://example.com/images/laptop.jpg",
-                            IsAvailable = true,
+                            IsActive = true,
+                            IsDeleted = false,
                             Name = "Laptop",
                             Price = 999.99m,
                             StockQuantity = 30
@@ -595,10 +730,13 @@ namespace ECommerceApp.Persistence.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(1200),
+                            CreatedBy = 0,
                             Description = "A thrilling science fiction novel set in the future.",
                             DiscountPercentage = 5,
                             ImageUrl = "https://example.com/images/scifi-novel.jpg",
-                            IsAvailable = true,
+                            IsActive = true,
+                            IsDeleted = false,
                             Name = "Science Fiction Novel",
                             Price = 19.99m,
                             StockQuantity = 100
@@ -612,6 +750,21 @@ namespace ECommerceApp.Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -633,6 +786,12 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId")
@@ -649,10 +808,31 @@ namespace ECommerceApp.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -662,53 +842,94 @@ namespace ECommerceApp.Persistence.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(436),
+                            CreatedBy = 0,
+                            IsDeleted = false,
                             Name = "Pending"
                         },
                         new
                         {
                             Id = 2,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(446),
+                            CreatedBy = 0,
+                            IsDeleted = false,
                             Name = "Processing"
                         },
                         new
                         {
                             Id = 3,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(448),
+                            CreatedBy = 0,
+                            IsDeleted = false,
                             Name = "Shipped"
                         },
                         new
                         {
                             Id = 4,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(450),
+                            CreatedBy = 0,
+                            IsDeleted = false,
                             Name = "Delivered"
                         },
                         new
                         {
                             Id = 5,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(451),
+                            CreatedBy = 0,
+                            IsDeleted = false,
                             Name = "Canceled"
                         },
                         new
                         {
                             Id = 6,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(453),
+                            CreatedBy = 0,
+                            IsDeleted = false,
                             Name = "Completed"
                         },
                         new
                         {
                             Id = 7,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(455),
+                            CreatedBy = 0,
+                            IsDeleted = false,
                             Name = "Failed"
                         },
                         new
                         {
                             Id = 8,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(456),
+                            CreatedBy = 0,
+                            IsDeleted = false,
                             Name = "Approved"
                         },
                         new
                         {
                             Id = 9,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(458),
+                            CreatedBy = 0,
+                            IsDeleted = false,
                             Name = "Rejected"
                         },
                         new
                         {
                             Id = 10,
+                            CreatedAt = new DateTime(2025, 3, 8, 17, 49, 32, 867, DateTimeKind.Utc).AddTicks(460),
+                            CreatedBy = 0,
+                            IsDeleted = false,
                             Name = "Refunded"
                         });
+                });
+
+            modelBuilder.Entity("ECommerceApp.Domain.Entities.Payments.Payment", b =>
+                {
+                    b.HasOne("E_commerce.Domain.Entities.Orders.Order", "Order")
+                        .WithOne("Payment")
+                        .HasForeignKey("ECommerceApp.Domain.Entities.Payments.Payment", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("E_commerce.Domain.Entities.Carts.Cart", b =>
@@ -833,17 +1054,6 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("E_commerce.Domain.Entities.Payments.Payment", b =>
-                {
-                    b.HasOne("E_commerce.Domain.Entities.Orders.Order", "Order")
-                        .WithOne("Payment")
-                        .HasForeignKey("E_commerce.Domain.Entities.Payments.Payment", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("E_commerce.Domain.Entities.Payments.Refund", b =>
                 {
                     b.HasOne("E_commerce.Domain.Entities.Status.Cancellation", "Cancellation")
@@ -852,7 +1062,7 @@ namespace ECommerceApp.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_commerce.Domain.Entities.Payments.Payment", "Payment")
+                    b.HasOne("ECommerceApp.Domain.Entities.Payments.Payment", "Payment")
                         .WithOne("Refund")
                         .HasForeignKey("E_commerce.Domain.Entities.Payments.Refund", "PaymentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -885,6 +1095,12 @@ namespace ECommerceApp.Persistence.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("ECommerceApp.Domain.Entities.Payments.Payment", b =>
+                {
+                    b.Navigation("Refund")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("E_commerce.Domain.Entities.Carts.Cart", b =>
                 {
                     b.Navigation("CartItems");
@@ -915,12 +1131,6 @@ namespace ECommerceApp.Persistence.Migrations
             modelBuilder.Entity("E_commerce.Domain.Entities.Orders.OrderItem", b =>
                 {
                     b.Navigation("Feedbacks");
-                });
-
-            modelBuilder.Entity("E_commerce.Domain.Entities.Payments.Payment", b =>
-                {
-                    b.Navigation("Refund")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("E_commerce.Domain.Entities.Products.Category", b =>

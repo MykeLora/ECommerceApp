@@ -4,6 +4,7 @@ using E_commerce.Domain.Entities.Orders;
 using E_commerce.Domain.Entities.Payments;
 using E_commerce.Domain.Entities.Products;
 using E_commerce.Domain.Entities.Status;
+using ECommerceApp.Domain.Entities.Payments;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -141,7 +142,7 @@ namespace ECommerceApp.Persistence.Context
                     ImageUrl = "https://example.com/images/smartphone.jpg",
                     DiscountPercentage = 10,
                     CategoryId = 1,
-                    IsAvailable = true
+                    IsActive = true
                 },
                 new Product
                 {
@@ -153,7 +154,7 @@ namespace ECommerceApp.Persistence.Context
                     ImageUrl = "https://example.com/images/laptop.jpg",
                     DiscountPercentage = 15,
                     CategoryId = 1,
-                    IsAvailable = true
+                    IsActive = true
                 },
                 new Product
                 {
@@ -165,7 +166,7 @@ namespace ECommerceApp.Persistence.Context
                     ImageUrl = "https://example.com/images/scifi-novel.jpg",
                     DiscountPercentage = 5,
                     CategoryId = 2,
-                    IsAvailable = true
+                    IsActive = true
                 }
             );
             #endregion

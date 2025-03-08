@@ -1,10 +1,6 @@
-using ECommerceApp.Application.Interfaces;
-using ECommerceApp.Application.Services;
-using ECommerceApp.Persistence.Base;
+
 using ECommerceApp.Persistence.Context;
-using ECommerceApp.Persistence.Interfaces.Customers;
 using ECommerceApp.Persistence.Interfaces.Products;
-using ECommerceApp.Persistence.Repositories.Customers;
 using ECommerceApp.Persistence.Repositories.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,16 +12,8 @@ public class Program
 
         // Add services to the container.
 
-        // Service for the Repository
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
-        builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-
-        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-
-        // Add services Application
-
-        builder.Services.AddTransient<CategoryService>();
 
 
         builder.Services.AddControllers()

@@ -12,7 +12,7 @@ namespace ECommerceApp.Persistence.Interfaces.Customers
     public interface ICustomerRepository : IBaseRepository<Customer>
     {
 
-        Task<Result> RegisterCustomerAsync();
-        Task<Result> LoginAsync();
+        Task RegisterCustomerAsync();
+        Task LoginAsync();
     }
 }

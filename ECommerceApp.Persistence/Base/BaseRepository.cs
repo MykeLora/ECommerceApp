@@ -17,122 +17,46 @@ namespace BECommerceApp.Persistance.Base
             _entities = _context.Set<TEntity>();
         }
 
+        public virtual async Task<TEntity> AddAsync(TEntity entity)
+        {
+             _entities.AddAsync(entity);
+             await _context.SaveChangesAsync();
+             return entity;
+        }
+
         public virtual async Task<bool> Exists(Expression<Func<TEntity, bool>> filter)
         {
             return await _entities.AnyAsync(filter);
         }
 
-        public virtual async Task<Result> GetAllAsync()
+        public virtual async Task<List<TEntity>> GetAllAsync()
         {
-            Result result = new Result();
-
-            try
-            {
-                var datos = await _entities.ToListAsync();
-                result.Data = datos;
-            }
-            catch (Exception ex)
-            {
-
-                result.Success = false;
-                result.Message = $"Ocurrió un error {ex.Message} obteniendo los datos.";
-            }
-
-            return result;
+            var entities = await _entities.ToListAsync();
+            return entities;
         }
 
-        public virtual async Task<Result> GetAllAsync(Expression<Func<TEntity, bool>> filter)
+        public virtual async Task<TEntity> GetByIdAsync(int id)
         {
-            Result result = new Result();
-
-            try
-            {
-                var datos = await _entities.Where(filter).ToListAsync();
-                result.Data = datos;
+            var search = await _entities.FindAsync(id);
+            if(search == null) 
+            { 
+                throw new Exception("Don't exixt any register with this Id"); 
             }
-            catch (Exception ex)
-            {
-
-                result.Success = false;
-                result.Message = $"Ocurrió un error {ex.Message} obteniendo los datos.";
-            }
-
-            return result;
-
+            return search;
         }
 
-        public virtual async Task<Result> GetByIdAsync(int Id)
+        public virtual async Task<TEntity> RemoveAsync(TEntity entity)
         {
-            Result result = new Result();
-            try
-            {
-                var entity = await _entities.FindAsync(Id);
-                result.Data = entity;
-            }
-            catch (Exception ex)
-            {
-
-                result.Success = false;
-                result.Message = $"Ocurrió un error {ex.Message} obteniendo la entidad.";
-            }
-            return result;
+            _entities.Remove(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        public async virtual Task<Result> DeleteAsync(TEntity entity)
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            Result result = new Result();
-
-            try
-            {
-                _entities.Remove(entity);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = $"Ocurrió un error {ex.Message} removiendo la entidad.";
-
-            }
-
-            return result;
-        }
-
-        public virtual async Task<Result> AddAsync(TEntity entity)
-        {
-            Result result = new Result();
-
-            try
-            {
-                _entities.Add(entity);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = $"Ocurrió un error {ex.Message} guardando la entidad.";
-
-            }
-
-            return result;
-        }
-
-        public virtual async Task<Result> UpdateAsync(TEntity entity)
-        {
-            Result result = new Result();
-
-            try
-            {
-                _entities.Update(entity);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = $"Ocurrió un error {ex.Message} actualizando la entidad.";
-
-            }
-
-            return result;
+             _entities.Update(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
     }
 }
