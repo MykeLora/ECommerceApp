@@ -10,6 +10,7 @@ namespace ECommerceApp.Application.Interfaces
     public interface IBaseRepository<TEntity> where TEntity : class
     {
         Task<List<TEntity>> GetAllAsync();
+        Task<List<TEntity>> GetAllWithInclude(List<string> propierties);
         Task<TEntity> GetByIdAsync(int id);
         Task<TEntity> AddAsync(TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity);
