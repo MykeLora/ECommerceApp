@@ -9,6 +9,7 @@ namespace ECommerceApp.Application.DTos.ProductDTos
 {
     public class ProductCreateDTO
     {
+
         [Required(ErrorMessage = "Product Name is required.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Product Name must be between 3 and 100 characters.")]
         public string Name { get; set; }
@@ -22,6 +23,10 @@ namespace ECommerceApp.Application.DTos.ProductDTos
 
         [Range(0, 1000, ErrorMessage = "Stock Quantity must be between 0 and 1000.")]
         public int StockQuantity { get; set; }
+        [Required(ErrorMessage = "Created By is required.")]
+        public int CreatedBy { get; set; }
+        [Required(ErrorMessage = "Created At is required.")]
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         [Url(ErrorMessage = "Invalid Image URL.")]
         public string ImageUrl { get; set; }

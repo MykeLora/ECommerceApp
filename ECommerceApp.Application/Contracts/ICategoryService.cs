@@ -1,5 +1,5 @@
-﻿using ECommerceApp.Application.Core;
-using ECommerceApp.Application.Responses.Configuration.Category;
+﻿using E_commerce.Domain.Entities.Products;
+using ECommerceApp.Application.Core;
 using ECommerceApp.DTOs.CategoryDTOs;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ECommerceApp.Application.Contracts
 {
-    public interface ICategoryService : IBaseService<CategoryResponse,CategoryCreateDTO,CategoryUpdateDTO>
-    { 
+    public interface ICategoryService : IBaseService<CategoryResponseDTO, CategoryCreateDTO, CategoryUpdateDTO, Category>
+    {
     }
 }

@@ -7,17 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Wrapper\**" />
+    <EmbeddedResource Remove="Wrapper\**" />
+    <None Remove="Wrapper\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ECommerceApp.Persistence\ECommerceApp.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
-    <Folder Include="Core\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Wrapper\" />
+    <Folder Include="Responses\Configuration\Category\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
   </ItemGroup>
 
