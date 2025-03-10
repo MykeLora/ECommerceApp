@@ -34,6 +34,7 @@ namespace ECommerceApp.Persistence.Repositories.Products
                                 {
                                     Id = product.Id,
                                     CategoryId = category.Id,
+                                    CategoryName = category.Name,
                                     Name = product.Name,
                                     Description = product.Description,
                                     Price = product.Price,
@@ -49,8 +50,7 @@ namespace ECommerceApp.Persistence.Repositories.Products
             }
 
             return querys;
-        }
-
+        } 
 
         public override Task<Product> AddAsync(Product entity)
         {

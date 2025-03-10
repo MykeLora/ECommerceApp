@@ -35,6 +35,16 @@ namespace BECommerceApp.Persistance.Base
             return entities;
         }
 
+        public async Task<List<TEntity>> GetAllWithInclude(List<string> propierties)
+        {
+            var query = _entities.AsQueryable();
+            foreach (var prop in propierties)
+            {
+                query = query.Include(prop);
+            }
+            return await query.ToListAsync();
+        }
+
         public virtual async Task<TEntity> GetByIdAsync(int id)
         {
             var search = await _entities.FindAsync(id);
