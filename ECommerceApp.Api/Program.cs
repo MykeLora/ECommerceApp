@@ -1,8 +1,14 @@
 
+using ECommerceApp.Application.Contracts;
+using ECommerceApp.Application.Mapping;
+using ECommerceApp.Application.Services.Products;
 using ECommerceApp.Persistence.Context;
 using ECommerceApp.Persistence.Interfaces.Products;
 using ECommerceApp.Persistence.Repositories.Products;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
+
 
 public class Program
 {
@@ -12,7 +18,12 @@ public class Program
 
         // Add services to the container.
 
+        //Regirter services AutoMapper
+        builder.Services.AddAutoMapper(typeof(GeneralProfile));
+
+
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        builder.Services.AddTransient<IProductService, ProductService>();
 
 
 
