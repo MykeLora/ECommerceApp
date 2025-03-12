@@ -10,6 +10,7 @@ namespace ECommerceApp.DTOs.CategoryDTOs
 
         [StringLength(100, ErrorMessage = "Description cannot exceed 100 characters.")]
         public string Description { get; set; }
+        public bool isActive { get; set; } = true;
     }
 }
 

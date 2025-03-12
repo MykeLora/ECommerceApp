@@ -144,5 +144,30 @@ namespace ECommerceApp.Application.Services.Products
             }
 
         }
+
+        public async Task<ProductStatusUpdateDTO> UpdateStatus(int id, bool status)
+        {
+            try
+            {
+                var existingProduct = await _productRepository.GetByIdAsync(id);
+
+                if(existingProduct == null)
+                {
+                    _logger.LogWarning($"Product with id {id} not found");
+                    return null;
+                }
+
+                existingProduct.IsActive = status;
+                await _productRepository.UpdateAsync(existingProduct);
+
+                return _mapper.Map<ProductStatusUpdateDTO>(existingProduct);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while updating product status");
+                throw;
+            }
+        }
     }
 }

@@ -14,6 +14,10 @@ namespace ECommerceApp.Application.DTos.ProductDTos
 
         [Required(ErrorMessage = "IsAvailable is required.")]
         public bool IsAvailable { get; set; }
+        public int? UpdatedBy { get; set; }
+        [Required(ErrorMessage = "UpdatedAt  is required.")]
+        public DateTime? UpdatedAt { get; set; } = DateTime.Now;
+
     }
 
 }

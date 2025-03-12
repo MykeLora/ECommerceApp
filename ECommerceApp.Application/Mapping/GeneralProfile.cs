@@ -59,7 +59,7 @@ namespace ECommerceApp.Application.Mapping
                 .ForMember(x => x.CreatedBy, opt => opt.Ignore())
                 .ForMember(x => x.UpdatedBy, opt => opt.Ignore())
                 .ForMember(x => x.IsDeleted, opt => opt.Ignore());
-              
+
 
             // Crear Categoría (create DTO)
             CreateMap<CategoryCreateDTO, Category>()
@@ -67,8 +67,8 @@ namespace ECommerceApp.Application.Mapping
                 .ForMember(x => x.UpdatedAt, opt => opt.Ignore()) // Al crear, la fecha de actualización no se establece
                 .ForMember(x => x.CreatedBy, opt => opt.Ignore())  // Esta será establecida en el backend según el usuario logueado
                 .ForMember(x => x.UpdatedBy, opt => opt.Ignore())
+                .ForMember(x => x.DeletedAt, opt => opt.Ignore())
                 .ForMember(x => x.IsDeleted, opt => opt.MapFrom(_ => false)); // Por defecto, una categoría no está eliminada
-            CreateMap<Category, CategoryCreateDTO>().ReverseMap();
 
             // Actualizar Categoría (update DTO)
             CreateMap<CategoryUpdateDTO, Category>()

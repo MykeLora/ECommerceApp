@@ -13,5 +13,7 @@ namespace ECommerceApp.Application.Contracts
     public interface IProductService : IBaseService<ProductResponseDTO, ProductCreateDTO,  ProductUpdateDTO, Product>
     {
         Task<List<ProductWithCategory>> GetProductsByCategoryAsync(int categoryId);
+
+        Task<ProductStatusUpdateDTO> UpdateStatus(int id, bool status);
     }
 }

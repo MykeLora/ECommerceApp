@@ -13,6 +13,10 @@ namespace ECommerceApp.DTOs.CategoryDTOs
 
         [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters.")]
         public string Description { get; set; }
+        public int? UpdatedBy { get; set; }
+        [Required(ErrorMessage = "UpdatedAt  is required.")]
+        public DateTime? UpdatedAt { get; set; } = DateTime.Now;
+
     }
 }
 

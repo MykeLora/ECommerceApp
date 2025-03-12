@@ -17,7 +17,7 @@ namespace ECommerceApp.Application.DTos.ProductDTos
         public string ImageUrl { get; set; }
         public int DiscountPercentage { get; set; }
         public int CategoryId { get; set; }
-        public bool IsAvailable { get; set; } = true;
+        public bool IsAvailable { get; set; } 
     }
 
 }

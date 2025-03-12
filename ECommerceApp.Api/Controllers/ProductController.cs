@@ -66,6 +66,13 @@ namespace ECommerceApp.Api.Controllers
             return Ok(result);
         }
 
+        [HttpPut("UpdateStatus/{id}/{status}")]
+        public async Task<IActionResult> UpdateStatus(int id, bool status)
+        {
+            var result = await _productService.UpdateStatus(id, status);
+            return Ok("Status Update successfuly");
+        }
+
 
         [HttpPut("UpdateProduct")]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductUpdateDTO product)

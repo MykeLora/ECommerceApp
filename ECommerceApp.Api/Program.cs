@@ -8,6 +8,8 @@ using ECommerceApp.Persistence.Repositories.Products;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
+using ECommerceApp.Ioc.Dependencies.Product;
+using ECommerceApp.Ioc.Dependencies.Context;
 
 
 public class Program
@@ -16,16 +18,17 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+        #region "App Dependencies"
+
+        builder.Services.AddProductDependencies();
+
+        builder.Services.AddContextDependencies(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+
+        #endregion
 
         //Regirter services AutoMapper
         builder.Services.AddAutoMapper(typeof(GeneralProfile));
-
-
-        builder.Services.AddScoped<IProductRepository, ProductRepository>();
-        builder.Services.AddTransient<IProductService, ProductService>();
-
-
 
         builder.Services.AddControllers()
         .AddJsonOptions(options =>
@@ -37,10 +40,6 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
-        // Configure EF Core with SQL Server
-        builder.Services.AddDbContext<ApplicationContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
         var app = builder.Build();
 

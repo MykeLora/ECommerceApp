@@ -10,7 +10,6 @@ namespace ECommerceApp.Domain.Common
     {
         protected AuditEntity()
         {
-            CreatedAt = DateTime.UtcNow;
             IsDeleted = false;
         }
 
