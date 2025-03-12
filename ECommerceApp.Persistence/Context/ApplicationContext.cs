@@ -4,6 +4,7 @@ using E_commerce.Domain.Entities.Orders;
 using E_commerce.Domain.Entities.Payments;
 using E_commerce.Domain.Entities.Products;
 using E_commerce.Domain.Entities.Status;
+using ECommerceApp.Domain.Common;
 using ECommerceApp.Domain.Entities.Payments;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,6 +20,29 @@ namespace ECommerceApp.Persistence.Context
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
         }
+
+        #region "SaveChange extentions"
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            foreach (var entry in ChangeTracker.Entries<AuditEntity>())
+            {
+
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedAt = DateTime.Now;
+                        entry.Entity.CreatedBy = 1;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.UpdatedAt = DateTime.Now;
+                        entry.Entity.UpdatedBy = 1;
+                        break;
+                }
+            }
+            return base.SaveChangesAsync(cancellationToken);
+        }
+        #endregion
 
         #region "DbSets"
 
